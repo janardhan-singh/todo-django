@@ -1,8 +1,15 @@
-from django.test import TestCase
+import unittest
+from django.test import Client
 
 
-class TestSample(TestCase):
+class SimpleTest(unittest.TestCase):
+    def setUp(self):
+        # Every test needs a client.
+        self.client = Client()
 
-    def test_sample(self):
-        print 'Test sample'
-        assert True
+    def test_details(self):
+        # Issue a GET request.
+        response = self.client.get('/todos/')
+
+        # Check that the response is 200 OK.
+        self.assertEqual(response.status_code, 200)
